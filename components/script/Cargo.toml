@@ -24,6 +24,7 @@ js_backtrace = []
 refcell_backtrace = ["accountable-refcell"]
 webxr = ["webxr-api", "script_bindings/webxr"]
 webgpu = ["script_bindings/webgpu", "script_traits/webgpu"]
+mse_api = ["script_bindings/mse_api"]
 
 [lints.rust]
 unexpected_cfgs = { level = "warn", check-cfg = ['cfg(crown)'] }

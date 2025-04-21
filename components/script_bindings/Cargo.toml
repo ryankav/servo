@@ -53,6 +53,7 @@ serde_json = { workspace = true }
 [features]
 bluetooth = []
 tracing = ["dep:tracing"]
+mse_api = []
 webgpu = []
 webxr = ["webxr-api"]
 

@@ -12,3 +12,8 @@ interface AudioTrack {
   readonly attribute DOMString language;
   attribute boolean enabled;
 };
+
+//https://w3c.github.io/media-source/#audio-track-extensions
+partial interface AudioTrack {
+  readonly attribute SourceBuffer? sourceBuffer;
+};
