@@ -15,5 +15,6 @@ interface AudioTrack {
 
 //https://w3c.github.io/media-source/#audio-track-extensions
 partial interface AudioTrack {
+  [Pref="dom_media_source_extension_enabled"]
   readonly attribute SourceBuffer? sourceBuffer;
 };
