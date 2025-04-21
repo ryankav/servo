@@ -6,7 +6,7 @@
 enum ReadyState { "closed", "open", "ended", };
 enum EndOfStreamError { "network", "decode", };
 
-[Exposed=(Window,DedicatedWorker)]
+[Exposed=(Window,DedicatedWorker), Pref="dom_media_source_extension_enabled"]
 interface MediaSource : EventTarget {
     constructor();
 

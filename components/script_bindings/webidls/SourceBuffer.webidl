@@ -5,7 +5,7 @@
 // https://w3c.github.io/media-source/#sourcebuffer
 enum AppendMode { "segments", "sequence", };
 
-[Exposed=(Window,DedicatedWorker)]
+[Exposed=(Window,DedicatedWorker), Pref="dom_media_source_extension_enabled"]
 interface SourceBuffer : EventTarget {
   attribute AppendMode mode;
   readonly  attribute boolean updating;

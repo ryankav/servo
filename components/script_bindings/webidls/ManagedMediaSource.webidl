@@ -3,7 +3,7 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 // https://w3c.github.io/media-source/#managedmediasource-interface
-[Exposed=(Window,DedicatedWorker)]
+[Exposed=(Window,DedicatedWorker), Pref="dom_media_source_extension_enabled"]
 interface ManagedMediaSource : MediaSource {
   constructor();
   readonly attribute boolean streaming;
