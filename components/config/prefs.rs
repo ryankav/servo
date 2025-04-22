@@ -263,7 +263,7 @@ impl Preferences {
             dom_gamepad_enabled: true,
             dom_imagebitmap_enabled: false,
             dom_intersection_observer_enabled: false,
-            dom_media_source_extension_enabled: false,
+            dom_media_source_extension_enabled: true,
             dom_microdata_testing_enabled: false,
             dom_mouse_event_which_enabled: false,
             dom_mutation_observer_enabled: true,

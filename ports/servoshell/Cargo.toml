@@ -37,7 +37,7 @@ ProductName = "Servo"
 [features]
 crown = ["libservo/crown"]
 debugmozjs = ["libservo/debugmozjs"]
-default = ["max_log_level", "webdriver", "webxr", "webgpu"]
+default = ["max_log_level", "webdriver", "webxr", "webgpu", "mse_api"]
 jitspew = ["libservo/jitspew"]
 js_backtrace = ["libservo/js_backtrace"]
 max_log_level = ["log/release_max_level_info"]
@@ -52,6 +52,7 @@ webdriver = ["libservo/webdriver"]
 webgl_backtrace = ["libservo/webgl_backtrace"]
 webxr = ["libservo/webxr"]
 webgpu = ["libservo/webgpu"]
+mse_api = ["libservo/mse_api"]
 
 [dependencies]
 dpi = { workspace = true }

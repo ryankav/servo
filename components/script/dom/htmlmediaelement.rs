@@ -65,7 +65,7 @@ use crate::dom::bindings::codegen::Bindings::TextTrackBinding::{TextTrackKind, T
 use crate::dom::bindings::codegen::Bindings::URLBinding::URLMethods;
 use crate::dom::bindings::codegen::Bindings::WindowBinding::Window_Binding::WindowMethods;
 use crate::dom::bindings::codegen::UnionTypes::{
-    MediaStreamOrBlob, VideoTrackOrAudioTrackOrTextTrack,
+    MediaStreamOrMediaSourceOrBlob, VideoTrackOrAudioTrackOrTextTrack,
 };
 use crate::dom::bindings::error::{Error, ErrorResult, Fallible};
 use crate::dom::bindings::inheritance::Castable;
@@ -90,6 +90,8 @@ use crate::dom::htmlstyleelement::HTMLStyleElement;
 use crate::dom::htmlvideoelement::HTMLVideoElement;
 use crate::dom::mediaerror::MediaError;
 use crate::dom::mediafragmentparser::MediaFragmentParser;
+#[cfg(feature = "mse_api")]
+use crate::dom::mediasource::MediaSource;
 use crate::dom::mediastream::MediaStream;
 use crate::dom::node::{Node, NodeDamage, NodeTraits, UnbindContext};
 use crate::dom::performanceresourcetiming::InitiatorType;
@@ -215,8 +217,8 @@ impl VideoFrameRenderer for MediaFrameRenderer {
 
         match &mut self.current_frame {
             Some(current_frame)
-                if current_frame.width == frame.get_width() &&
-                    current_frame.height == frame.get_height() =>
+                if current_frame.width == frame.get_width()
+                    && current_frame.height == frame.get_height() =>
             {
                 if !frame.is_gl_texture() {
                     updates.push(ImageUpdate::UpdateImage(
@@ -311,15 +313,20 @@ impl VideoFrameRenderer for MediaFrameRenderer {
 enum SrcObject {
     MediaStream(Dom<MediaStream>),
     Blob(Dom<Blob>),
+    #[cfg(feature = "mse_api")]
+    MediaSource(Dom<MediaSource>),
 }
 
-impl From<MediaStreamOrBlob> for SrcObject {
+impl From<MediaStreamOrMediaSourceOrBlob> for SrcObject {
     #[cfg_attr(crown, allow(crown::unrooted_must_root))]
-    fn from(src_object: MediaStreamOrBlob) -> SrcObject {
+    fn from(src_object: MediaStreamOrMediaSourceOrBlob) -> SrcObject {
         match src_object {
-            MediaStreamOrBlob::Blob(blob) => SrcObject::Blob(Dom::from_ref(&*blob)),
-            MediaStreamOrBlob::MediaStream(stream) => {
+            MediaStreamOrMediaSourceOrBlob::Blob(blob) => SrcObject::Blob(Dom::from_ref(&*blob)),
+            MediaStreamOrMediaSourceOrBlob::MediaStream(stream) => {
                 SrcObject::MediaStream(Dom::from_ref(&*stream))
+            },
+            MediaStreamOrMediaSourceOrBlob::MediaSource(_) => {
+                unimplemented!("Need to handle media source and add correct cfg")
             },
         }
     }
@@ -675,8 +682,8 @@ impl HTMLMediaElement {
             _ => (),
         }
 
-        if old_ready_state <= ReadyState::HaveCurrentData &&
-            ready_state >= ReadyState::HaveFutureData
+        if old_ready_state <= ReadyState::HaveCurrentData
+            && ready_state >= ReadyState::HaveFutureData
         {
             task_source.queue_simple_event(self.upcast(), atom!("canplay"));
 
@@ -999,6 +1006,8 @@ impl HTMLMediaElement {
                                 }
                             }
                         },
+                        #[cfg(feature = "mse_api")]
+                        SrcObject::MediaSource(_) => unimplemented!(),
                     }
                 }
             },
@@ -1069,17 +1078,17 @@ impl HTMLMediaElement {
 
     /// <https://html.spec.whatwg.org/multipage/#potentially-playing>
     fn is_potentially_playing(&self) -> bool {
-        !self.paused.get() &&
-            !self.Ended() &&
-            self.error.get().is_none() &&
-            !self.is_blocked_media_element()
+        !self.paused.get()
+            && !self.Ended()
+            && self.error.get().is_none()
+            && !self.is_blocked_media_element()
     }
 
     // https://html.spec.whatwg.org/multipage/#blocked-media-element
     fn is_blocked_media_element(&self) -> bool {
-        self.ready_state.get() <= ReadyState::HaveCurrentData ||
-            self.is_paused_for_user_interaction() ||
-            self.is_paused_for_in_band_content()
+        self.ready_state.get() <= ReadyState::HaveCurrentData
+            || self.is_paused_for_user_interaction()
+            || self.is_paused_for_in_band_content()
     }
 
     // https://html.spec.whatwg.org/multipage/#paused-for-user-interaction
@@ -2167,19 +2176,23 @@ impl HTMLMediaElementMethods<crate::DomTypeHolder> for HTMLMediaElement {
     }
 
     // https://html.spec.whatwg.org/multipage/#dom-media-srcobject
-    fn GetSrcObject(&self) -> Option<MediaStreamOrBlob> {
+    fn GetSrcObject(&self) -> Option<MediaStreamOrMediaSourceOrBlob> {
         (*self.src_object.borrow())
             .as_ref()
             .map(|src_object| match src_object {
-                SrcObject::Blob(blob) => MediaStreamOrBlob::Blob(DomRoot::from_ref(blob)),
-                SrcObject::MediaStream(stream) => {
-                    MediaStreamOrBlob::MediaStream(DomRoot::from_ref(stream))
+                SrcObject::Blob(blob) => {
+                    MediaStreamOrMediaSourceOrBlob::Blob(DomRoot::from_ref(blob))
                 },
+                SrcObject::MediaStream(stream) => {
+                    MediaStreamOrMediaSourceOrBlob::MediaStream(DomRoot::from_ref(stream))
+                },
+                #[cfg(feature = "mse_api")]
+                SrcObject::MediaSource(_) => unimplemented!(),
             })
     }
 
     // https://html.spec.whatwg.org/multipage/#dom-media-srcobject
-    fn SetSrcObject(&self, value: Option<MediaStreamOrBlob>, can_gc: CanGc) {
+    fn SetSrcObject(&self, value: Option<MediaStreamOrMediaSourceOrBlob>, can_gc: CanGc) {
         *self.src_object.borrow_mut() = value.map(|value| value.into());
         self.media_element_load_algorithm(can_gc);
     }
@@ -2273,9 +2286,9 @@ impl HTMLMediaElementMethods<crate::DomTypeHolder> for HTMLMediaElement {
 
             // Step 6.4.
             match state {
-                ReadyState::HaveNothing |
-                ReadyState::HaveMetadata |
-                ReadyState::HaveCurrentData => {
+                ReadyState::HaveNothing
+                | ReadyState::HaveMetadata
+                | ReadyState::HaveCurrentData => {
                     task_source.queue_simple_event(self.upcast(), atom!("waiting"));
                 },
                 ReadyState::HaveFutureData | ReadyState::HaveEnoughData => {
@@ -2624,9 +2637,9 @@ impl MicrotaskRunnable for MediaElementMicrotask {
 
     fn enter_realm(&self) -> JSAutoRealm {
         match self {
-            &MediaElementMicrotask::ResourceSelection { ref elem, .. } |
-            &MediaElementMicrotask::PauseIfNotInDocument { ref elem } |
-            &MediaElementMicrotask::Seeked { ref elem, .. } => enter_realm(&**elem),
+            &MediaElementMicrotask::ResourceSelection { ref elem, .. }
+            | &MediaElementMicrotask::PauseIfNotInDocument { ref elem }
+            | &MediaElementMicrotask::Seeked { ref elem, .. } => enter_realm(&**elem),
         }
     }
 }
@@ -2772,8 +2785,8 @@ impl FetchResponseListener for HTMLMediaElementFetchListener {
             let status = &s.status;
             (
                 status.is_success(),
-                *status == StatusCode::PARTIAL_CONTENT ||
-                    *status == StatusCode::RANGE_NOT_SATISFIABLE,
+                *status == StatusCode::PARTIAL_CONTENT
+                    || *status == StatusCode::RANGE_NOT_SATISFIABLE,
             )
         });
 

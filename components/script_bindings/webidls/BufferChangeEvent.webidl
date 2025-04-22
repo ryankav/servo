@@ -3,7 +3,7 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 // https://w3c.github.io/media-source/#bufferedchangeevent-interface
-[Exposed=(Window,DedicatedWorker), Pref="dom_media_source_extension_enabled"]
+[Exposed=(Window/* ,DedicatedWorker*/), Pref="dom_media_source_extension_enabled"]
 interface BufferedChangeEvent : Event {
   constructor(DOMString type, optional BufferedChangeEventInit eventInitDict = {});
 

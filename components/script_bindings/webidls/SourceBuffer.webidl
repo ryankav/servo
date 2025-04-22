@@ -5,7 +5,10 @@
 // https://w3c.github.io/media-source/#sourcebuffer
 enum AppendMode { "segments", "sequence", };
 
-[Exposed=(Window,DedicatedWorker), Pref="dom_media_source_extension_enabled"]
+// FIXME: Currently the tracks extensions do not have DedicatedWorker exposure there is an open
+// issue here: https://github.com/w3c/media-source/issues/280 but seems like TimeRanges also are
+// lacking the required exposure
+[Exposed=(Window/*, DedicatedWorker*/), Pref="dom_media_source_extension_enabled"]
 interface SourceBuffer : EventTarget {
   attribute AppendMode mode;
   readonly  attribute boolean updating;
