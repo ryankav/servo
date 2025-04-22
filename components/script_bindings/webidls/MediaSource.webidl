@@ -6,12 +6,12 @@
 enum ReadyState { "closed", "open", "ended", };
 enum EndOfStreamError { "network", "decode", };
 
-[Exposed=(Window,DedicatedWorker), Pref="dom_media_source_extension_enabled"]
+[Exposed=(Window/*, DedicatedWorker*/), Pref="dom_media_source_extension_enabled"]
 interface MediaSource : EventTarget {
     constructor();
 
-    [SameObject, Exposed=DedicatedWorker]
-    readonly  attribute MediaSourceHandle handle;
+    //[SameObject, Exposed=DedicatedWorker]
+    //readonly  attribute MediaSourceHandle handle;
     readonly  attribute SourceBufferList sourceBuffers;
     readonly  attribute SourceBufferList activeSourceBuffers;
     readonly  attribute ReadyState readyState;
@@ -21,7 +21,7 @@ interface MediaSource : EventTarget {
     attribute EventHandler onsourceended;
     attribute EventHandler onsourceclose;
 
-    static readonly attribute boolean canConstructInDedicatedWorker;
+    // static readonly attribute boolean canConstructInDedicatedWorker;
 
     SourceBuffer addSourceBuffer(DOMString type);
     undefined removeSourceBuffer(SourceBuffer sourceBuffer);
