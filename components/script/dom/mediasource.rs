@@ -4,6 +4,8 @@
 
 use dom_struct::dom_struct;
 
+use js::rust::HandleObject;
+
 use crate::dom::bindings::cell::DomRefCell;
 use crate::dom::bindings::codegen::Bindings::MediaSourceBinding::{
     EndOfStreamError, MediaSourceMethods, ReadyState,
@@ -66,19 +68,23 @@ impl MediaSource {
 }
 
 impl MediaSourceMethods<crate::DomTypeHolder> for MediaSource {
-    fn SourceBuffers(&self) {
+    fn Constructor(_window: &Window, _handle: Option<HandleObject>, _can_gc: CanGc) -> DomRoot<MediaSource> {
         todo!()
     }
 
-    fn AddSourceBuffer(&self, src: DOMString) {
+    fn SourceBuffers(&self) -> DomRoot<SourceBufferList> {
         todo!()
     }
 
-    fn RemoveSourceBuffer(&self, buf: SourceBuffer) {
+    fn AddSourceBuffer(&self, _src: DOMString) -> DomRoot<SourceBufferList> {
         todo!()
     }
 
-    fn EndOfStream(&self, err: Option<EndOfStreamError>) {
+    fn RemoveSourceBuffer(&self, _buf: &SourceBuffer) {
+        todo!()
+    }
+
+    fn EndOfStream(&self, _err: Option<EndOfStreamError>) {
         todo!()
     }
 
@@ -94,11 +100,11 @@ impl MediaSourceMethods<crate::DomTypeHolder> for MediaSource {
         todo!()
     }
 
-    fn SetDuration(&self, duration: f64) {
+    fn SetDuration(&self, _duration: f64) {
         todo!()
     }
 
-    fn SetLiveSeekableRange(&self, start: f64, end: f64) {
+    fn SetLiveSeekableRange(&self, _start: Finite<f64>, _end: Finite<f64>) {
         todo!()
     }
 
@@ -106,7 +112,9 @@ impl MediaSourceMethods<crate::DomTypeHolder> for MediaSource {
         todo!()
     }
 
-    fn IsTypeSupported() {}
+    fn IsTypeSupported(_window: &Window, _type: DOMString) -> bool {
+        todo!()
+    }
 
     event_handler!(sourceopen, GetOnsourceopen, SetOnsourceopen);
     event_handler!(sourceended, GetOnsourceended, SetOnsourceended);

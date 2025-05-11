@@ -7,7 +7,7 @@ use js::rust::HandleObject;
 use stylo_atoms::Atom;
 
 use crate::dom::bindings::cell::DomRefCell;
-use crate::dom::bindings::codegen::Bindings::BufferedChangeEvent::{
+use crate::dom::bindings::codegen::Bindings::BufferedChangeEventBinding::{
     BufferedChangeEventInit, BufferedChangeEventMethods,
 };
 use crate::dom::bindings::codegen::Bindings::EventBinding::EventMethods;
@@ -17,8 +17,8 @@ use crate::dom::bindings::reflector::reflect_dom_object_with_proto;
 use crate::dom::bindings::root::DomRoot;
 use crate::dom::bindings::str::DOMString;
 use crate::dom::event::{Event, EventBubbles, EventCancelable};
-use crate::dom::globalscope::GlobalScope;
 use crate::dom::timeranges::TimeRanges;
+use crate::dom::window::Window;
 use crate::script_runtime::CanGc;
 
 #[dom_struct]
@@ -41,7 +41,7 @@ impl BufferedChangeEvent {
     }
 
     pub(crate) fn new(
-        global: &GlobalScope,
+        window: &Window,
         type_: Atom,
         can_bubble: EventBubbles,
         cancelable: EventCancelable,
@@ -50,7 +50,7 @@ impl BufferedChangeEvent {
         can_gc: CanGc,
     ) -> DomRoot<BufferedChangeEvent> {
         Self::new_with_proto(
-            global,
+            window,
             None,
             type_,
             can_bubble,
@@ -63,7 +63,7 @@ impl BufferedChangeEvent {
 
     #[allow(clippy::too_many_arguments)]
     fn new_with_proto(
-        global: &GlobalScope,
+        window: &Window,
         proto: Option<HandleObject>,
         type_: Atom,
         can_bubble: EventBubbles,
@@ -74,7 +74,7 @@ impl BufferedChangeEvent {
     ) -> DomRoot<BufferedChangeEvent> {
         let ev = reflect_dom_object_with_proto(
             Box::new(Self::new_inherited(added_ranges, removed_ranges)),
-            global,
+            window,
             proto,
             can_gc,
         );
@@ -89,7 +89,7 @@ impl BufferedChangeEvent {
 impl BufferedChangeEventMethods<crate::DomTypeHolder> for BufferedChangeEvent {
     // https://w3c.github.io/media-source/#dom-bufferedchangeevent
     fn Constructor(
-        global: &GlobalScope,
+        window: &Window,
         proto: Option<HandleObject>,
         can_gc: CanGc,
         type_: DOMString,
@@ -98,7 +98,7 @@ impl BufferedChangeEventMethods<crate::DomTypeHolder> for BufferedChangeEvent {
         let bubbles = EventBubbles::from(init.parent.bubbles);
         let cancelable = EventCancelable::from(init.parent.cancelable);
         let ev = Self::new_with_proto(
-            global,
+            window,
             proto,
             Atom::from(type_),
             bubbles,
@@ -111,17 +111,17 @@ impl BufferedChangeEventMethods<crate::DomTypeHolder> for BufferedChangeEvent {
     }
 
     // https://w3c.github.io/media-source/#dom-bufferedchangeevent-addedranges
-    fn AddedRanges(&self) -> DomRefCell<Option<TimeRanges>> {
-        self.added_ranges.clone()
+    fn AddedRanges(&self) -> DomRoot<TimeRanges> {
+        todo!()
     }
 
     // https://w3c.github.io/media-source/#dom-bufferedchangeevent-removedranges
-    fn RemovedRanges(&self) -> DomRefCell<Option<TimeRanges>> {
-        self.removed_ranges.clone()
+    fn RemovedRanges(&self) -> DomRoot<TimeRanges> {
+        todo!()
     }
 
     // https://dom.spec.whatwg.org/#dom-event-istrusted
     fn IsTrusted(&self) -> bool {
-        self.event.IsTrusted()
+        todo!()
     }
 }

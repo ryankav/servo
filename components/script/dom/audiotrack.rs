@@ -7,6 +7,7 @@ use std::cell::Cell;
 use dom_struct::dom_struct;
 
 use crate::dom::audiotracklist::AudioTrackList;
+use crate::dom::sourcebuffer::SourceBuffer;
 use crate::dom::bindings::cell::DomRefCell;
 use crate::dom::bindings::codegen::Bindings::AudioTrackBinding::AudioTrackMethods;
 use crate::dom::bindings::reflector::{Reflector, reflect_dom_object};
@@ -122,5 +123,11 @@ impl AudioTrackMethods<crate::DomTypeHolder> for AudioTrack {
             }
         }
         self.set_enabled(value);
+    }
+
+    // //https://w3c.github.io/media-source/#audio-track-extensions
+    #[cfg(feature = "mse_api")]
+    fn GetSourceBuffer(&self) -> Option<DomRoot<SourceBuffer>> {
+        todo!()
     }
 }
