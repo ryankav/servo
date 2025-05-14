@@ -431,6 +431,8 @@ pub(crate) mod keyboardevent;
 pub(crate) mod location;
 #[cfg(feature = "mse_api")]
 pub(crate) mod managedmediasource;
+#[cfg(feature = "mse_api")]
+pub(crate) mod managedsourcebuffer;
 pub(crate) mod mediadeviceinfo;
 pub(crate) mod mediadevices;
 pub(crate) mod mediaelementaudiosourcenode;

@@ -7,6 +7,7 @@ use std::cell::Cell;
 use dom_struct::dom_struct;
 
 use crate::dom::audiotracklist::AudioTrackList;
+#[cfg(feature = "mse_api")]
 use crate::dom::sourcebuffer::SourceBuffer;
 use crate::dom::bindings::cell::DomRefCell;
 use crate::dom::bindings::codegen::Bindings::AudioTrackBinding::AudioTrackMethods;

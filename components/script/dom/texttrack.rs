@@ -15,6 +15,8 @@ use crate::dom::bindings::reflector::{DomGlobal, reflect_dom_object};
 use crate::dom::bindings::root::{Dom, DomRoot, MutNullableDom};
 use crate::dom::bindings::str::DOMString;
 use crate::dom::eventtarget::EventTarget;
+#[cfg(feature = "mse_api")]
+use crate::dom::sourcebuffer::SourceBuffer;
 use crate::dom::texttrackcue::TextTrackCue;
 use crate::dom::texttrackcuelist::TextTrackCueList;
 use crate::dom::texttracklist::TextTrackList;
@@ -170,6 +172,12 @@ impl TextTrackMethods<crate::DomTypeHolder> for TextTrack {
         // Step 2
         cues.remove(index);
         Ok(())
+    }
+
+    
+    #[cfg(feature = "mse_api")]
+    fn GetSourceBuffer(&self) -> Option<DomRoot<SourceBuffer>> {
+        todo!()
     }
 
     // https://html.spec.whatwg.org/multipage/#handler-texttrack-oncuechange

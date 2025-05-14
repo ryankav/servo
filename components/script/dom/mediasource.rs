@@ -11,7 +11,6 @@ use crate::dom::bindings::codegen::Bindings::MediaSourceBinding::{
     EndOfStreamError, MediaSourceMethods, ReadyState,
 };
 use crate::dom::bindings::num::Finite;
-use crate::dom::bindings::reflector::reflect_dom_object;
 use crate::dom::bindings::root::DomRoot;
 use crate::dom::bindings::str::DOMString;
 use crate::dom::eventtarget::EventTarget;
@@ -29,44 +28,6 @@ pub(crate) struct MediaSource {
     duration: Finite<f64>,
 }
 
-impl MediaSource {
-    pub(crate) fn new_inherited(
-        ready_state: ReadyState,
-        source_buffers: SourceBufferList,
-        active_source_buffers: SourceBufferList,
-        duration: Finite<f64>,
-    ) -> MediaSource {
-        Self {
-            eventtarget: EventTarget::new_inherited(),
-            ready_state,
-            source_buffers: DomRefCell::new(source_buffers),
-            active_source_buffers: DomRefCell::new(active_source_buffers),
-            duration,
-        }
-    }
-
-    #[allow(clippy::too_many_arguments)]
-    pub(crate) fn new(
-        window: &Window,
-        ready_state: ReadyState,
-        source_buffers: SourceBufferList,
-        active_source_buffers: SourceBufferList,
-        duration: Finite<f64>,
-        can_gc: CanGc,
-    ) -> DomRoot<MediaSource> {
-        reflect_dom_object(
-            Box::new(Self::new_inherited(
-                ready_state,
-                source_buffers,
-                active_source_buffers,
-                duration,
-            )),
-            window,
-            can_gc,
-        )
-    }
-}
-
 impl MediaSourceMethods<crate::DomTypeHolder> for MediaSource {
     fn Constructor(_window: &Window, _handle: Option<HandleObject>, _can_gc: CanGc) -> DomRoot<MediaSource> {
         todo!()
@@ -76,7 +37,7 @@ impl MediaSourceMethods<crate::DomTypeHolder> for MediaSource {
         todo!()
     }
 
-    fn AddSourceBuffer(&self, _src: DOMString) -> DomRoot<SourceBufferList> {
+    fn AddSourceBuffer(&self, _src: DOMString) -> DomRoot<SourceBuffer> {
         todo!()
     }
 
@@ -88,8 +49,8 @@ impl MediaSourceMethods<crate::DomTypeHolder> for MediaSource {
         todo!()
     }
 
-    fn ActiveSourceBuffers(&self) {
-        todo!()
+    fn ActiveSourceBuffers(&self, ) -> DomRoot<SourceBufferList> {
+       todo!() 
     }
 
     fn ReadyState(&self) -> ReadyState {
