@@ -54,7 +54,7 @@ serde_json = { workspace = true }
 bluetooth = []
 testbinding = []
 tracing = ["dep:tracing"]
-mse_api = []
+media_source_extension = []
 webgpu = []
 webxr = ["webxr-api"]
 

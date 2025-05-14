@@ -89,7 +89,7 @@ use crate::dom::htmlstyleelement::HTMLStyleElement;
 use crate::dom::htmlvideoelement::HTMLVideoElement;
 use crate::dom::mediaerror::MediaError;
 use crate::dom::mediafragmentparser::MediaFragmentParser;
-#[cfg(feature = "mse_api")]
+#[cfg(feature = "media_source_extension")]
 use crate::dom::mediasource::MediaSource;
 use crate::dom::mediastream::MediaStream;
 use crate::dom::node::{Node, NodeDamage, NodeTraits, UnbindContext};
@@ -318,7 +318,7 @@ impl VideoFrameRenderer for MediaFrameRenderer {
 enum SrcObject {
     MediaStream(Dom<MediaStream>),
     Blob(Dom<Blob>),
-    #[cfg(feature = "mse_api")]
+    #[cfg(feature = "media_source_extension")]
     MediaSource(Dom<MediaSource>),
 }
 
@@ -1052,7 +1052,7 @@ impl HTMLMediaElement {
                                 }
                             }
                         },
-                        #[cfg(feature = "mse_api")]
+                        #[cfg(feature = "media_source_extension")]
                         SrcObject::MediaSource(_) => unimplemented!(),
                     }
                 }
@@ -2300,7 +2300,7 @@ impl HTMLMediaElementMethods<crate::DomTypeHolder> for HTMLMediaElement {
                 SrcObject::MediaStream(stream) => {
                     MediaStreamOrMediaSourceOrBlob::MediaStream(DomRoot::from_ref(stream))
                 },
-                #[cfg(feature = "mse_api")]
+                #[cfg(feature = "media_source_extension")]
                 SrcObject::MediaSource(_) => unimplemented!(),
             })
     }

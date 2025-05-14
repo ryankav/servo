@@ -11,7 +11,7 @@ use crate::dom::bindings::codegen::Bindings::VideoTrackBinding::VideoTrackMethod
 use crate::dom::bindings::reflector::{Reflector, reflect_dom_object};
 use crate::dom::bindings::root::{Dom, DomRoot};
 use crate::dom::bindings::str::DOMString;
-#[cfg(feature = "mse_api")]
+#[cfg(feature = "media_source_extension")]
 use crate::dom::sourcebuffer::SourceBuffer;
 use crate::dom::videotracklist::VideoTrackList;
 use crate::dom::window::Window;
@@ -126,7 +126,7 @@ impl VideoTrackMethods<crate::DomTypeHolder> for VideoTrack {
         self.set_selected(value);
     }
 
-    #[cfg(feature = "mse_api")]
+    #[cfg(feature = "media_source_extension")]
     fn GetSourceBuffer(&self) -> Option<DomRoot<SourceBuffer>> {
         todo!()
     }

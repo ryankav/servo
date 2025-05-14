@@ -15,7 +15,7 @@ use crate::dom::bindings::reflector::{DomGlobal, reflect_dom_object};
 use crate::dom::bindings::root::{Dom, DomRoot, MutNullableDom};
 use crate::dom::bindings::str::DOMString;
 use crate::dom::eventtarget::EventTarget;
-#[cfg(feature = "mse_api")]
+#[cfg(feature = "media_source_extension")]
 use crate::dom::sourcebuffer::SourceBuffer;
 use crate::dom::texttrackcue::TextTrackCue;
 use crate::dom::texttrackcuelist::TextTrackCueList;
@@ -175,7 +175,7 @@ impl TextTrackMethods<crate::DomTypeHolder> for TextTrack {
     }
 
     
-    #[cfg(feature = "mse_api")]
+    #[cfg(feature = "media_source_extension")]
     fn GetSourceBuffer(&self) -> Option<DomRoot<SourceBuffer>> {
         todo!()
     }
