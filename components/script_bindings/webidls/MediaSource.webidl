@@ -21,7 +21,7 @@ interface MediaSource : EventTarget {
     attribute EventHandler onsourceended;
     attribute EventHandler onsourceclose;
 
-    // static readonly attribute boolean canConstructInDedicatedWorker;
+    static readonly attribute boolean canConstructInDedicatedWorker;
 
     SourceBuffer addSourceBuffer(DOMString type);
     undefined removeSourceBuffer(SourceBuffer sourceBuffer);

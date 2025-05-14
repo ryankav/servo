@@ -3,7 +3,6 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 use dom_struct::dom_struct;
-
 use js::rust::HandleObject;
 
 use crate::dom::bindings::cell::DomRefCell;
@@ -56,6 +55,11 @@ impl MediaSourceMethods<crate::DomTypeHolder> for MediaSource {
 
     // https://w3c.github.io/media-source/#duration-attribute
     fn SetDuration(&self, _duration: f64) {
+        todo!()
+    }
+
+    // https://w3c.github.io/media-source/#dom-mediasource-canconstructindedicatedworker
+    fn CanConstructInDedicatedWorker() -> {
         todo!()
     }
 
