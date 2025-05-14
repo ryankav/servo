@@ -59,7 +59,7 @@ impl MediaSourceMethods<crate::DomTypeHolder> for MediaSource {
     }
 
     // https://w3c.github.io/media-source/#dom-mediasource-canconstructindedicatedworker
-    fn CanConstructInDedicatedWorker() -> {
+    fn CanConstructInDedicatedWorker(_window: &Window) -> bool {
         todo!()
     }
 
