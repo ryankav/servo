@@ -13,5 +13,6 @@ pub(crate) struct ManagedSourceBuffer {
 }
 
 impl ManagedSourceBufferMethods<crate::DomTypeHolder> for ManagedSourceBuffer {
+  // https://w3c.github.io/media-source/#dfn-bufferedchange
   event_handler!(bufferdchange, GetOnbufferedchange, SetOnbufferedchange);
 }

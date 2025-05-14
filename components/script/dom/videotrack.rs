@@ -126,6 +126,7 @@ impl VideoTrackMethods<crate::DomTypeHolder> for VideoTrack {
         self.set_selected(value);
     }
 
+    // https://w3c.github.io/media-source/#video-track-extensions
     #[cfg(feature = "media_source_extension")]
     fn GetSourceBuffer(&self) -> Option<DomRoot<SourceBuffer>> {
         todo!()

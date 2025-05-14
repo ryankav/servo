@@ -26,77 +26,102 @@ pub(crate) struct SourceBuffer {
 }
 
 impl SourceBufferMethods<crate::DomTypeHolder> for SourceBuffer {
-  fn Updating(&self) -> bool {
-    todo!()
-  }
-
-  fn Buffered(&self, ) -> DomRoot<TimeRanges> {
-    todo!()
-  }
-
+  // https://w3c.github.io/media-source/#dom-sourcebuffer-mode
   fn Mode(&self) -> AppendMode {
     todo!() 
   }
 
+  // https://w3c.github.io/media-source/#dom-sourcebuffer-mode
   fn SetMode(&self, _value: AppendMode) {
     todo!()
   }
 
+  // https://w3c.github.io/media-source/#dom-sourcebuffer-updating
+  fn Updating(&self) -> bool {
+    todo!()
+  }
+
+  // https://w3c.github.io/media-source/#dom-sourcebuffer-buffered
+  fn Buffered(&self, ) -> DomRoot<TimeRanges> {
+    todo!()
+  }
+
+  // https://w3c.github.io/media-source/#dom-sourcebuffer-timestampoffset
   fn TimestampOffset(&self) -> Finite<f64> {
     todo!() 
   }
 
+  // https://w3c.github.io/media-source/#dom-sourcebuffer-timestampoffset
   fn SetTimestampOffset(&self, _value: Finite<f64>) {
     todo!()
   }
 
+  // https://w3c.github.io/media-source/#dom-sourcebuffer-audiotracks
   fn AudioTracks(&self) -> DomRoot<AudioTrackList> {
     todo!()
   }
 
+  // https://w3c.github.io/media-source/#dom-sourcebuffer-videotracks
   fn VideoTracks(&self) -> DomRoot<VideoTrackList> {
     todo!()
   }
 
+  // https://w3c.github.io/media-source/#dom-sourcebuffer-texttracks
   fn TextTracks(&self) -> DomRoot<TextTrackList> {
     todo!()
   }
-
-  fn AppendBuffer(&self, _data: ArrayBufferViewOrArrayBuffer) {
-    todo!()
-  }
-
+  // https://w3c.github.io/media-source/#dom-sourcebuffer-appendwindowstart
   fn AppendWindowStart(&self) -> Finite<f64> {
     todo!()
   }
 
+  // https://w3c.github.io/media-source/#dom-sourcebuffer-appendwindowstart
   fn SetAppendWindowStart(&self, _value: Finite<f64>) {
     todo!()
   }
 
+  // https://w3c.github.io/media-source/#dom-sourcebuffer-appendwindowend
   fn AppendWindowEnd(&self) -> f64 {
     todo!()
   }
 
+  // https://w3c.github.io/media-source/#dom-sourcebuffer-appendwindowend
   fn SetAppendWindowEnd(&self, _value: f64) {
     todo!()
   }
 
+  // https://w3c.github.io/media-source/#dom-sourcebuffer-onupdatestart
+  event_handler!(updatestart, GetOnupdatestart, SetOnupdatestart);
+
+  // https://w3c.github.io/media-source/#dom-sourcebuffer-onupdate
+  event_handler!(update, GetOnupdate, SetOnupdate);
+
+  // https://w3c.github.io/media-source/#dom-sourcebuffer-onupdateend
+  event_handler!(updateend, GetOnupdateend, SetOnupdateend);
+
+  // https://w3c.github.io/media-source/#dom-sourcebuffer-onerror
+  event_handler!(error, GetOnerror, SetOnerror);
+
+  // https://w3c.github.io/media-source/#dom-sourcebuffer-onabort
+  event_handler!(abort, GetOnabort, SetOnabort);
+
+  // https://w3c.github.io/media-source/#dom-sourcebuffer-appendbuffer
+  fn AppendBuffer(&self, _data: ArrayBufferViewOrArrayBuffer) {
+    todo!()
+  }
+
+  // https://w3c.github.io/media-source/#dom-sourcebuffer-abort
   fn Abort(&self) {
       todo!()
   }
 
+  // https://w3c.github.io/media-source/#dom-sourcebuffer-changetype
   fn ChangeType(&self, _type_: DOMString) {
       todo!()
   }
 
+  // https://w3c.github.io/media-source/#dom-sourcebuffer-remove
   fn Remove(&self, _start: Finite<f64>, _end: f64) {
       todo!()
   }
-
-  event_handler!(updatestart, GetOnupdatestart, SetOnupdatestart);
-  event_handler!(update, GetOnupdate, SetOnupdate);
-  event_handler!(updateend, GetOnupdateend, SetOnupdateend);
-  event_handler!(error, GetOnerror, SetOnerror);
-  event_handler!(abort, GetOnabort, SetOnabort);
 }

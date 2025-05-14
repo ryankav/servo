@@ -18,14 +18,19 @@ pub(crate) struct ManagedMediaSource {
 }
 
 impl ManagedMediaSourceMethods<crate::DomTypeHolder> for ManagedMediaSource {
+  // https://w3c.github.io/media-source/#dom-managedmediasource-constructor
   fn Constructor(_window: &Window, _proto: Option<HandleObject>, _can_gc: CanGc) -> DomRoot<ManagedMediaSource> {
     todo!()
   }
 
+  // https://w3c.github.io/media-source/#dom-managedmediasource-streaming
   fn Streaming(&self) -> bool {
       todo!()
   }
 
+  // https://w3c.github.io/media-source/#dfn-startstreaming
   event_handler!(startstreaming, GetOnstartstreaming, SetOnstartstreaming);
+
+  // https://w3c.github.io/media-source/#dfn-endstreaming
   event_handler!(endstreaming, GetOnendstreaming, SetOnendstreaming);
 }

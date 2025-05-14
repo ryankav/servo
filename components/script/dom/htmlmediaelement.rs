@@ -222,8 +222,8 @@ impl VideoFrameRenderer for MediaFrameRenderer {
 
         match &mut self.current_frame {
             Some(current_frame)
-                if current_frame.width == frame.get_width()
-                    && current_frame.height == frame.get_height() =>
+                if current_frame.width == frame.get_width() &&
+                    current_frame.height == frame.get_height() =>
             {
                 if !frame.is_gl_texture() {
                     updates.push(ImageUpdate::UpdateImage(
@@ -331,7 +331,7 @@ impl From<MediaStreamOrMediaSourceOrBlob> for SrcObject {
                 SrcObject::MediaStream(Dom::from_ref(&*stream))
             },
             MediaStreamOrMediaSourceOrBlob::MediaSource(_) => {
-                unimplemented!("Need to handle media source and add correct cfg")
+                unimplemented!()
             },
         }
     }
@@ -717,8 +717,8 @@ impl HTMLMediaElement {
             _ => (),
         }
 
-        if old_ready_state <= ReadyState::HaveCurrentData
-            && ready_state >= ReadyState::HaveFutureData
+        if old_ready_state <= ReadyState::HaveCurrentData &&
+            ready_state >= ReadyState::HaveFutureData
         {
             task_source.queue_simple_event(self.upcast(), atom!("canplay"));
 
@@ -1124,17 +1124,17 @@ impl HTMLMediaElement {
 
     /// <https://html.spec.whatwg.org/multipage/#potentially-playing>
     fn is_potentially_playing(&self) -> bool {
-        !self.paused.get()
-            && !self.Ended()
-            && self.error.get().is_none()
-            && !self.is_blocked_media_element()
+        !self.paused.get() &&
+            !self.Ended() &&
+            self.error.get().is_none() &&
+            !self.is_blocked_media_element()
     }
 
     // https://html.spec.whatwg.org/multipage/#blocked-media-element
     fn is_blocked_media_element(&self) -> bool {
-        self.ready_state.get() <= ReadyState::HaveCurrentData
-            || self.is_paused_for_user_interaction()
-            || self.is_paused_for_in_band_content()
+        self.ready_state.get() <= ReadyState::HaveCurrentData ||
+            self.is_paused_for_user_interaction() ||
+            self.is_paused_for_in_band_content()
     }
 
     // https://html.spec.whatwg.org/multipage/#paused-for-user-interaction
@@ -2400,9 +2400,9 @@ impl HTMLMediaElementMethods<crate::DomTypeHolder> for HTMLMediaElement {
 
             // Step 6.4.
             match state {
-                ReadyState::HaveNothing
-                | ReadyState::HaveMetadata
-                | ReadyState::HaveCurrentData => {
+                ReadyState::HaveNothing |
+                ReadyState::HaveMetadata |
+                ReadyState::HaveCurrentData => {
                     task_source.queue_simple_event(self.upcast(), atom!("waiting"));
                 },
                 ReadyState::HaveFutureData | ReadyState::HaveEnoughData => {
@@ -2751,9 +2751,9 @@ impl MicrotaskRunnable for MediaElementMicrotask {
 
     fn enter_realm(&self) -> JSAutoRealm {
         match self {
-            &MediaElementMicrotask::ResourceSelection { ref elem, .. }
-            | &MediaElementMicrotask::PauseIfNotInDocument { ref elem }
-            | &MediaElementMicrotask::Seeked { ref elem, .. } => enter_realm(&**elem),
+            &MediaElementMicrotask::ResourceSelection { ref elem, .. } |
+            &MediaElementMicrotask::PauseIfNotInDocument { ref elem } |
+            &MediaElementMicrotask::Seeked { ref elem, .. } => enter_realm(&**elem),
         }
     }
 }
@@ -3003,8 +3003,8 @@ impl FetchResponseListener for HTMLMediaElementFetchListener {
             let status = &s.status;
             (
                 status.is_success(),
-                *status == StatusCode::PARTIAL_CONTENT
-                    || *status == StatusCode::RANGE_NOT_SATISFIABLE,
+                *status == StatusCode::PARTIAL_CONTENT ||
+                    *status == StatusCode::RANGE_NOT_SATISFIABLE,
             )
         });
 

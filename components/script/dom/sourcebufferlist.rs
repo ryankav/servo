@@ -15,14 +15,19 @@ pub(crate) struct SourceBufferList {
 }
 
 impl SourceBufferListMethods<crate::DomTypeHolder> for SourceBufferList {
+  // https://w3c.github.io/media-source/#dom-sourcebufferlist-length
   fn Length(&self) -> u32 {
       todo!()
   }
 
+  // https://w3c.github.io/media-source/#dfn-sourcebufferlist-getter
   fn IndexedGetter(&self, _index: u32) -> Option<DomRoot<SourceBuffer>> {
     todo!()
   }
 
+  // https://w3c.github.io/media-source/#dom-sourcebufferlist-onaddsourcebuffer
   event_handler!(addsourcebuffer, GetOnaddsourcebuffer, SetOnaddsourcebuffer);
+
+  // https://w3c.github.io/media-source/#dom-sourcebufferlist-onremovesourcebuffer
   event_handler!(removesourcebuffer, GetOnremovesourcebuffer, SetOnremovesourcebuffer);
 }
