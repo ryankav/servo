@@ -238,8 +238,6 @@ pub(crate) mod blob;
 #[cfg(feature = "bluetooth")]
 #[allow(clippy::module_inception)]
 pub(crate) mod bluetooth;
-#[cfg(feature = "media_source_extension")]
-pub(crate) mod bufferedchangeevent;
 #[cfg(feature = "bluetooth")]
 pub(crate) use self::bluetooth::*;
 pub(crate) mod broadcastchannel;
@@ -429,10 +427,6 @@ pub(crate) mod intersectionobserverentry;
 pub(crate) mod intersectionobserverrootmargin;
 pub(crate) mod keyboardevent;
 pub(crate) mod location;
-#[cfg(feature = "media_source_extension")]
-pub(crate) mod managedmediasource;
-#[cfg(feature = "media_source_extension")]
-pub(crate) mod managedsourcebuffer;
 pub(crate) mod mediadeviceinfo;
 pub(crate) mod mediadevices;
 pub(crate) mod mediaelementaudiosourcenode;
@@ -444,9 +438,9 @@ pub(crate) mod mediaquerylist;
 pub(crate) mod mediaquerylistevent;
 pub(crate) mod mediasession;
 #[cfg(feature = "media_source_extension")]
-pub(crate) mod mediasource;
+mod media_source_extension;
 #[cfg(feature = "media_source_extension")]
-pub(crate) mod mediasourcehandle;
+pub(crate) use self::media_source_extension::*;
 pub(crate) mod mediastream;
 pub(crate) mod mediastreamaudiodestinationnode;
 pub(crate) mod mediastreamaudiosourcenode;
@@ -547,10 +541,6 @@ pub(crate) mod servointernals;
 #[allow(dead_code)]
 pub(crate) mod servoparser;
 pub(crate) mod shadowroot;
-#[cfg(feature = "media_source_extension")]
-pub(crate) mod sourcebuffer;
-#[cfg(feature = "media_source_extension")]
-pub(crate) mod sourcebufferlist;
 pub(crate) mod staticrange;
 pub(crate) mod stereopannernode;
 pub(crate) mod storage;
