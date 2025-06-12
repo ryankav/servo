@@ -29,20 +29,24 @@ pub(crate) struct MediaSource {
 
 impl MediaSourceMethods<crate::DomTypeHolder> for MediaSource {
     // https://w3c.github.io/media-source/#dom-mediasource-constructor
-    fn Constructor(_window: &Window, _handle: Option<HandleObject>, _can_gc: CanGc) -> DomRoot<MediaSource> {
+    fn Constructor(
+        _window: &Window,
+        _handle: Option<HandleObject>,
+        _can_gc: CanGc,
+    ) -> DomRoot<MediaSource> {
         todo!()
     }
 
-    // https://w3c.github.io/media-source/#dom-mediasource-sourcebuffers 
+    // https://w3c.github.io/media-source/#dom-mediasource-sourcebuffers
     fn SourceBuffers(&self) -> DomRoot<SourceBufferList> {
         todo!()
     }
 
     // https://w3c.github.io/media-source/#activesourcebuffers-attribute
     fn ActiveSourceBuffers(&self) -> DomRoot<SourceBufferList> {
-       todo!() 
+        todo!()
     }
-    
+
     // https://w3c.github.io/media-source/#readystate-attribute
     fn ReadyState(&self) -> ReadyState {
         todo!()

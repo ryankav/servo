@@ -174,7 +174,6 @@ impl TextTrackMethods<crate::DomTypeHolder> for TextTrack {
         Ok(())
     }
 
-    
     // https://w3c.github.io/media-source/#text-track-extensions
     #[cfg(feature = "media_source_extension")]
     fn GetSourceBuffer(&self) -> Option<DomRoot<SourceBuffer>> {

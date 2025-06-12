@@ -7,13 +7,13 @@ use std::cell::Cell;
 use dom_struct::dom_struct;
 
 use crate::dom::audiotracklist::AudioTrackList;
-#[cfg(feature = "media_source_extension")]
-use crate::dom::sourcebuffer::SourceBuffer;
 use crate::dom::bindings::cell::DomRefCell;
 use crate::dom::bindings::codegen::Bindings::AudioTrackBinding::AudioTrackMethods;
 use crate::dom::bindings::reflector::{Reflector, reflect_dom_object};
 use crate::dom::bindings::root::{Dom, DomRoot};
 use crate::dom::bindings::str::DOMString;
+#[cfg(feature = "media_source_extension")]
+use crate::dom::sourcebuffer::SourceBuffer;
 use crate::dom::window::Window;
 use crate::script_runtime::CanGc;
 
