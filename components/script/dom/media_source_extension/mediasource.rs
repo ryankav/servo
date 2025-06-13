@@ -9,6 +9,7 @@ use crate::dom::bindings::cell::DomRefCell;
 use crate::dom::bindings::codegen::Bindings::MediaSourceBinding::{
     EndOfStreamError, MediaSourceMethods, ReadyState,
 };
+use crate::dom::bindings::error::Fallible;
 use crate::dom::bindings::num::Finite;
 use crate::dom::bindings::root::DomRoot;
 use crate::dom::bindings::str::DOMString;
@@ -58,37 +59,39 @@ impl MediaSourceMethods<crate::DomTypeHolder> for MediaSource {
     }
 
     // https://w3c.github.io/media-source/#duration-attribute
-    fn SetDuration(&self, _duration: f64) {
+    fn SetDuration(&self, _duration: f64) -> Fallible<()> {
         todo!()
     }
 
     // https://w3c.github.io/media-source/#dom-mediasource-canconstructindedicatedworker
     fn CanConstructInDedicatedWorker(_window: &Window) -> bool {
-        todo!()
+        // FIXME: this is meant to only respond with true however due to the constraints imposed by
+        // the current Idls this isn't possible
+        false
     }
 
     // https://w3c.github.io/media-source/#addsourcebuffer-method
-    fn AddSourceBuffer(&self, _src: DOMString) -> DomRoot<SourceBuffer> {
+    fn AddSourceBuffer(&self, _src: DOMString) -> Fallible<DomRoot<SourceBuffer>> {
         todo!()
     }
 
     // https://w3c.github.io/media-source/#removesourcebuffer-method
-    fn RemoveSourceBuffer(&self, _buf: &SourceBuffer) {
+    fn RemoveSourceBuffer(&self, _buf: &SourceBuffer) -> Fallible<()> {
         todo!()
     }
 
     // https://w3c.github.io/media-source/#endofstream-method
-    fn EndOfStream(&self, _err: Option<EndOfStreamError>) {
+    fn EndOfStream(&self, _err: Option<EndOfStreamError>) -> Fallible<()> {
         todo!()
     }
 
     // https://w3c.github.io/media-source/#setliveseekablerange-method
-    fn SetLiveSeekableRange(&self, _start: Finite<f64>, _end: Finite<f64>) {
+    fn SetLiveSeekableRange(&self, _start: Finite<f64>, _end: Finite<f64>) -> Fallible<()> {
         todo!()
     }
 
     // https://w3c.github.io/media-source/#clearliveseekablerange-method
-    fn ClearLiveSeekableRange(&self) {
+    fn ClearLiveSeekableRange(&self) -> Fallible<()> {
         todo!()
     }
 

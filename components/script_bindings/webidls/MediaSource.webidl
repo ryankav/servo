@@ -16,17 +16,17 @@ interface MediaSource : EventTarget {
     readonly  attribute SourceBufferList activeSourceBuffers;
     readonly  attribute ReadyState readyState;
 
-    attribute unrestricted double duration;
+    [SetterThrows] attribute unrestricted double duration;
     attribute EventHandler onsourceopen;
     attribute EventHandler onsourceended;
     attribute EventHandler onsourceclose;
 
     static readonly attribute boolean canConstructInDedicatedWorker;
 
-    SourceBuffer addSourceBuffer(DOMString type);
-    undefined removeSourceBuffer(SourceBuffer sourceBuffer);
-    undefined endOfStream(optional EndOfStreamError error);
-    undefined setLiveSeekableRange(double start, double end);
-    undefined clearLiveSeekableRange();
+    [Throws] SourceBuffer addSourceBuffer(DOMString type);
+    [Throws] undefined removeSourceBuffer(SourceBuffer sourceBuffer);
+    [Throws] undefined endOfStream(optional EndOfStreamError error);
+    [Throws] undefined setLiveSeekableRange(double start, double end);
+    [Throws] undefined clearLiveSeekableRange();
     static boolean isTypeSupported(DOMString type);
 };

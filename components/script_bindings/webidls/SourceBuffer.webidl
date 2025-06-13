@@ -10,15 +10,15 @@ enum AppendMode { "segments", "sequence", };
 // lacking the required exposure
 [Exposed=(Window/*, DedicatedWorker*/), Pref="dom_media_source_extension_enabled"]
 interface SourceBuffer : EventTarget {
-  attribute AppendMode mode;
+  [SetterThrows] attribute AppendMode mode;
   readonly  attribute boolean updating;
-  readonly  attribute TimeRanges buffered;
-  attribute double timestampOffset;
+  [GetterThrows] readonly  attribute TimeRanges buffered;
+  [SetterThrows] attribute double timestampOffset;
   readonly  attribute AudioTrackList audioTracks;
   readonly  attribute VideoTrackList videoTracks;
   readonly  attribute TextTrackList textTracks;
-  attribute double appendWindowStart;
-  attribute unrestricted double appendWindowEnd;
+  [SetterThrows] attribute double appendWindowStart;
+  [SetterThrows] attribute unrestricted double appendWindowEnd;
 
   attribute EventHandler onupdatestart;
   attribute EventHandler onupdate;
@@ -27,7 +27,7 @@ interface SourceBuffer : EventTarget {
   attribute EventHandler onabort;
 
   undefined appendBuffer(BufferSource data);
-  undefined abort();
-  undefined changeType(DOMString type);
-  undefined remove(double start, unrestricted double end);
+  [Throws] undefined abort();
+  [Throws] undefined changeType(DOMString type);
+  [Throws] undefined remove(double start, unrestricted double end);
 };

@@ -10,6 +10,7 @@ use crate::dom::bindings::codegen::Bindings::SourceBufferBinding::{
     AppendMode, SourceBufferMethods,
 };
 use crate::dom::bindings::codegen::UnionTypes::ArrayBufferViewOrArrayBuffer;
+use crate::dom::bindings::error::Fallible;
 use crate::dom::bindings::num::Finite;
 use crate::dom::bindings::root::DomRoot;
 use crate::dom::bindings::str::DOMString;
@@ -34,7 +35,7 @@ impl SourceBufferMethods<crate::DomTypeHolder> for SourceBuffer {
     }
 
     // https://w3c.github.io/media-source/#dom-sourcebuffer-mode
-    fn SetMode(&self, _value: AppendMode) {
+    fn SetMode(&self, _value: AppendMode) -> Fallible<()> {
         todo!()
     }
 
@@ -44,7 +45,7 @@ impl SourceBufferMethods<crate::DomTypeHolder> for SourceBuffer {
     }
 
     // https://w3c.github.io/media-source/#dom-sourcebuffer-buffered
-    fn Buffered(&self) -> DomRoot<TimeRanges> {
+    fn GetBuffered(&self) -> Fallible<DomRoot<TimeRanges>> {
         todo!()
     }
 
@@ -54,7 +55,7 @@ impl SourceBufferMethods<crate::DomTypeHolder> for SourceBuffer {
     }
 
     // https://w3c.github.io/media-source/#dom-sourcebuffer-timestampoffset
-    fn SetTimestampOffset(&self, _value: Finite<f64>) {
+    fn SetTimestampOffset(&self, _value: Finite<f64>) -> Fallible<()> {
         todo!()
     }
 
@@ -78,7 +79,7 @@ impl SourceBufferMethods<crate::DomTypeHolder> for SourceBuffer {
     }
 
     // https://w3c.github.io/media-source/#dom-sourcebuffer-appendwindowstart
-    fn SetAppendWindowStart(&self, _value: Finite<f64>) {
+    fn SetAppendWindowStart(&self, _value: Finite<f64>) -> Fallible<()> {
         todo!()
     }
 
@@ -88,7 +89,7 @@ impl SourceBufferMethods<crate::DomTypeHolder> for SourceBuffer {
     }
 
     // https://w3c.github.io/media-source/#dom-sourcebuffer-appendwindowend
-    fn SetAppendWindowEnd(&self, _value: f64) {
+    fn SetAppendWindowEnd(&self, _value: f64) -> Fallible<()> {
         todo!()
     }
 
@@ -113,17 +114,17 @@ impl SourceBufferMethods<crate::DomTypeHolder> for SourceBuffer {
     }
 
     // https://w3c.github.io/media-source/#dom-sourcebuffer-abort
-    fn Abort(&self) {
+    fn Abort(&self) -> Fallible<()> {
         todo!()
     }
 
     // https://w3c.github.io/media-source/#dom-sourcebuffer-changetype
-    fn ChangeType(&self, _type_: DOMString) {
+    fn ChangeType(&self, _type_: DOMString) -> Fallible<()> {
         todo!()
     }
 
     // https://w3c.github.io/media-source/#dom-sourcebuffer-remove
-    fn Remove(&self, _start: Finite<f64>, _end: f64) {
+    fn Remove(&self, _start: Finite<f64>, _end: f64) -> Fallible<()> {
         todo!()
     }
 }

@@ -10,10 +10,11 @@ use crate::dom::bindings::codegen::Bindings::BufferedChangeEventBinding::{
     BufferedChangeEventInit, BufferedChangeEventMethods,
 };
 use crate::dom::bindings::codegen::Bindings::EventBinding::EventMethods;
+use crate::dom::bindings::inheritance::Castable;
 use crate::dom::bindings::reflector::reflect_dom_object_with_proto;
 use crate::dom::bindings::root::{Dom, DomRoot};
 use crate::dom::bindings::str::DOMString;
-use crate::dom::event::Event;
+use crate::dom::event::{Event, EventBubbles, EventCancelable};
 use crate::dom::timeranges::{TimeRanges, TimeRangesContainer};
 use crate::dom::window::Window;
 use crate::script_runtime::CanGc;
@@ -48,6 +49,8 @@ impl BufferedChangeEvent {
             window,
             None,
             type_,
+            EventBubbles::from(false),
+            EventCancelable::from(false),
             added_ranges,
             removed_ranges,
             can_gc,
@@ -57,12 +60,14 @@ impl BufferedChangeEvent {
     fn new_with_proto(
         window: &Window,
         proto: Option<HandleObject>,
-        _type_: Atom,
+        type_: Atom,
+        bubbles: EventBubbles,
+        cancelable: EventCancelable,
         added_ranges: &TimeRanges,
         removed_ranges: &TimeRanges,
         can_gc: CanGc,
     ) -> DomRoot<BufferedChangeEvent> {
-        reflect_dom_object_with_proto(
+        let ev = reflect_dom_object_with_proto(
             Box::new(BufferedChangeEvent::new_inherited(
                 added_ranges,
                 removed_ranges,
@@ -70,7 +75,13 @@ impl BufferedChangeEvent {
             window,
             proto,
             can_gc,
-        )
+        );
+
+        {
+            let event = ev.upcast::<Event>();
+            event.init_event(type_, bool::from(bubbles), bool::from(cancelable));
+        }
+        ev
     }
 }
 
@@ -83,10 +94,15 @@ impl BufferedChangeEventMethods<crate::DomTypeHolder> for BufferedChangeEvent {
         type_: DOMString,
         init: &BufferedChangeEventInit,
     ) -> DomRoot<BufferedChangeEvent> {
+        let bubbles = EventBubbles::from(init.parent.bubbles);
+        let cancelable = EventCancelable::from(init.parent.cancelable);
+
         BufferedChangeEvent::new_with_proto(
             window,
             proto,
             Atom::from(type_),
+            bubbles,
+            cancelable,
             &init.addedRanges.clone().unwrap_or(TimeRanges::new(
                 window,
                 TimeRangesContainer::default(),
