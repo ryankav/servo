@@ -28,3 +28,9 @@ interface TextTrack : EventTarget {
 
   attribute EventHandler oncuechange;
 };
+
+// https://w3c.github.io/media-source/#text-track-extensions
+partial interface TextTrack {
+  [Pref="dom_media_source_extension_enabled"]
+  readonly attribute SourceBuffer? sourceBuffer;
+};

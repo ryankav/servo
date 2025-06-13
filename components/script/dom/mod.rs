@@ -427,6 +427,10 @@ pub(crate) mod intersectionobserverentry;
 pub(crate) mod intersectionobserverrootmargin;
 pub(crate) mod keyboardevent;
 pub(crate) mod location;
+#[cfg(feature = "media_source_extension")]
+mod media_source_extension;
+#[cfg(feature = "media_source_extension")]
+pub(crate) use self::media_source_extension::*;
 pub(crate) mod mediadeviceinfo;
 pub(crate) mod mediadevices;
 pub(crate) mod mediaelementaudiosourcenode;

@@ -12,3 +12,9 @@ interface VideoTrack {
   readonly attribute DOMString language;
   attribute boolean selected;
 };
+
+// https://w3c.github.io/media-source/#video-track-extensions
+partial interface VideoTrack {
+  [Pref="dom_media_source_extension_enabled"]
+  readonly attribute SourceBuffer? sourceBuffer;
+};

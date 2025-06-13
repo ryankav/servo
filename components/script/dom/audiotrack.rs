@@ -12,6 +12,8 @@ use crate::dom::bindings::codegen::Bindings::AudioTrackBinding::AudioTrackMethod
 use crate::dom::bindings::reflector::{Reflector, reflect_dom_object};
 use crate::dom::bindings::root::{Dom, DomRoot};
 use crate::dom::bindings::str::DOMString;
+#[cfg(feature = "media_source_extension")]
+use crate::dom::sourcebuffer::SourceBuffer;
 use crate::dom::window::Window;
 use crate::script_runtime::CanGc;
 
@@ -122,5 +124,11 @@ impl AudioTrackMethods<crate::DomTypeHolder> for AudioTrack {
             }
         }
         self.set_enabled(value);
+    }
+
+    // //https://w3c.github.io/media-source/#audio-track-extensions
+    #[cfg(feature = "media_source_extension")]
+    fn GetSourceBuffer(&self) -> Option<DomRoot<SourceBuffer>> {
+        todo!()
     }
 }
